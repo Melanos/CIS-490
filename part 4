@@ -1,0 +1,77 @@
+import tkinter as tk
+from tkinter import messagebox
+from automata.fa.dfa import DFA
+
+# Language = {0,1,2,3,4,5,6,7,8,9} accept only student ID which is 2787486.
+# Part 3
+dfa = DFA(
+    states={'Q0', 'Q1', 'Q2', 'Q3', "Q4", "Q5", "Q6", "Q7", "Q8"},
+    input_symbols={'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'},
+    transitions={
+        'Q0': {'0': 'Q8', '1': 'Q8', '2': 'Q1', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q8', '9': 'Q8'},
+        'Q1': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q2', '8': 'Q8', '9': 'Q8'},
+        'Q2': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q3', '9': 'Q8'},
+        'Q3': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q4', '8': 'Q8', '9': 'Q8'},
+        'Q4': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q5',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q8', '9': 'Q8'},
+        'Q5': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q6', '9': 'Q8'},
+        'Q6': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q7', '7': 'Q8', '8': 'Q8', '9': 'Q8'},
+        'Q7': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q8', '9': 'Q8'},
+        'Q8': {'0': 'Q8', '1': 'Q8', '2': 'Q8', '3': 'Q8', '4': 'Q8',
+               '5': 'Q8', '6': 'Q8', '7': 'Q8', '8': 'Q8', '9': 'Q8'},
+
+    },
+    initial_state='Q0',
+    final_states={'Q7'}
+
+)
+
+
+def ExitApplication():
+    """Exit button function"""
+    MsgBox = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application', icon='warning')
+    if MsgBox == 'yes':
+        quit()
+    else:
+        messagebox.showinfo('Return', 'You will now return to the application screen')
+
+
+def check_entry_fields():
+    """DFA GUI"""
+    s_id = language.get()
+
+    if dfa.accepts_input(s_id):
+        res.configure(text=str(language.get() + " accepted."))
+    else:
+        res.configure(text=str(language.get() + " rejected."))
+
+
+gui = tk.Tk()
+gui.geometry("300x135")
+gui.title("DFA")
+
+tk.Label(gui, text="Enter your ID: ").pack()
+language = tk.Entry(gui)
+language.pack()
+res = tk.Label(gui)
+res.pack()
+
+B2 = tk.Button(gui, text="Exit", command=ExitApplication, activeforeground='White',
+               activebackground="blue", bg="white", fg="Black",
+               width=500, font='summer', bd=5)
+
+B1 = tk.Button(gui, text="Check", command=check_entry_fields, activeforeground='White',
+               activebackground="blue", bg="white", fg="Black",
+               width=500, font='summer', bd=5)
+
+B1.pack(side='top')
+B2.pack(side='top')
+
+tk.mainloop()
