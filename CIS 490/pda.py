@@ -8,14 +8,14 @@ dpda = DPDA(
     stack_symbols={'$', 'B'},
     transitions={
         'q0': {
-            'a': {'$': ('q1', ('B', '$'))}  # transition pushes 'B' to stack
+            'a': {'$': ('q0', ('B', '$')), 'B': ('q0', ('B', 'B'))},  # transition pushes 'B' to stack
+            'b': {'B': ('q1', ('B',))}
         },
         'q1': {
-            'a': {'B': ('q1', ('B','B'))},
-            'b': {'B': ('q2', 'B')}
+            'b': {'B': ('q2', '')}
         },
         'q2': {
-            'b': {'B': ('q2', '')},
+            'b': {'B': ('q1', 'B')},
             '': {'$': ('q3', ('$',))}  # transition does not change stack
         }
     },
@@ -47,9 +47,9 @@ def check_entry_fields():
 
 gui = tk.Tk()
 gui.geometry("300x135")
-gui.title("DFA")
+gui.title("PDA")
 
-tk.Label(gui, text="Enter your ID: ").pack()
+tk.Label(gui, text="Enter PDA: ").pack()
 language = tk.Entry(gui)
 language.pack()
 res = tk.Label(gui)
